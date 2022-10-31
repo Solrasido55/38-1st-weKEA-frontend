@@ -64,6 +64,7 @@
 
   ![NAV2](https://user-images.githubusercontent.com/106805946/198544243-cc44cffb-4d58-4e24-83ba-f7477d182beb.gif)
 
+> mount될때는 transition을 사용해 애니메이션을 구성하고, Unmount될때는 먼저 @keyframes로 만들어둔 사라지는 애니메이션을 적용한 후 애니메이션이 끝나는 시점에 unmount되도록 setTimeout을 활용
 ## Footer
 
 - 상수데이터를 활용한 레이아웃 구현
@@ -92,6 +93,9 @@
   ![detail2](https://user-images.githubusercontent.com/106805946/198544161-ceb83842-3a1e-428b-b967-fcbeb5ca30ce.gif)
 - 이미지를 클릭하면 캐러셀이 포함된 모달이 나오도록 구현
   ![detail1-1](https://user-images.githubusercontent.com/106805946/198544095-cecf8bf1-bf01-4c90-adfc-42b2cea76dc0.gif)
+  
+> 이미지를 클릭하면 해당 이미지의 인덱스+1을 State에 저장되고 캐러셀속 슬라이더의 위치값을 인덱스에 사이즈를 곱한값으로 이동시켜주도록 구현하고 forward화살표를 클릭하면 인덱스 state가 +1 되고 back화살표를 클릭하면 -1되도록 구현
+  
 - 색상을 선택하지 않으면 장바구니에 추가하지 못하게 설정
 - 장바구니, 위시리스트에 추가 기능
   ![deatil 3](https://user-images.githubusercontent.com/106805946/198544020-27eb2a1d-fa37-4b84-9f01-d0a61d9532e4.gif)
@@ -105,6 +109,7 @@
   ![cart1](https://user-images.githubusercontent.com/106805946/198542862-0fe191ed-0be2-4774-9ba4-47006c76a98c.gif)
 - 가격과 수량을 곱해 품목별 총 가격을 표시
 - 품목별 총 가격을 모두 더한 총 가격 표시
+> 품목별 총 가격을 배열에 저장한 후 reduce 메소드를 사용해 누산해주는 방식
 - 쿠폰 입력창 구현
   ![cart3](https://user-images.githubusercontent.com/106805946/198542877-bde061a0-9c7f-4fae-8658-2bbae2312ab5.gif)
 - 결제하기 버튼을 클릭하면 "결제하시겠습니까?"가 포함된 모달이 mount됨
@@ -113,11 +118,22 @@
 
 ## WishList
 
+> 장바구니에는 productOptionId를 저장하고, 위시리스트에는 productId로 저장하는 상태였는데, productId 하나당 productOptionId가 두개가 존재하여 하나의 productId를 위시리스트에 저장하면 두개의 productOptionId가 출력되는 문제가 있었다. 이러한 문제를 해결하기 위해 GET요청을 통해 위시리스트 목록 배열을 받아온 후 홀수번째의 요소만 state에 저장되도록 하여 해결했다.
+```javascript
+  const addAllProductToCart = () => {
+    wishLists.map((product, index) => {
+      if (index % 2 === 1) {
+        addToCart(product.id, popAlertModal);
+      }
+    });
+  };
+  ```
 - 장바구니에 추가 기능
 - 모든 상품 장바구니에 추가 기능
 
 ![wishlist1](https://user-images.githubusercontent.com/106805946/198816079-c1f7e549-9d34-4fc6-a3e4-08012129ff7d.gif)
 
+> 장바구니에 추가를 하면 fetch를 통해 POST요청을 보내 처리했는데, 위시리스트의 "장바구니에 모든 제품 추가"를 클릭하면 map 메소드를 사용해 위시리스트 배열속 요소의 수 만큼 POST요청을 보내도록 구현
 - 상품 삭제 기능
 
 ## My Page
@@ -129,3 +145,7 @@
 - 결제 내역 표시
 - 주문취소 기능
   ![purchase1](https://user-images.githubusercontent.com/106805946/198544270-f60e6783-8a62-4327-bd26-f627a5f09e6e.gif)
+  
+## Toast
+- 장바구니/위시리스트에 추가, 주문취소등의 상황에 Toast가 나타나도록 구현
+- @keyframes를 사용해 마운트 됐을 때 화면 밖에서 나타났다가 잠깐 머무른 후 화면 밖으로 사라지게 만든 후 setTimeout을 사용해 애니메이션이 끝나는 시점에 unmount되도록 구현
