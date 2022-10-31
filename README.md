@@ -118,15 +118,17 @@
 
 ## WishList
 
-> 장바구니에는 productOptionId를 저장하고, 위시리스트에는 productId로 저장하는 상태였는데, productId 하나당 productOptionId가 두개가 존재하여 하나의 productId를 위시리스트에 저장하면 두개의 productOptionId가 출력되는 문제가 있었다. 이러한 문제를 해결하기 위해 GET요청을 통해 위시리스트 목록 배열을 받아온 후 홀수번째의 요소만 state에 저장되도록 하여 해결했다.
+> 장바구니에는 productOptionId를 저장하고, 위시리스트에는 productId로 저장하는 상태였는데, productId 하나당 productOptionId가 두개가 존재하여 하나의 productId를 위시리스트에 저장하면 두개의 productOptionId가 출력되는 문제가 있었다. 이러한 문제를 해결하기 위해 GET요청을 통해 위시리스트 목록 배열을 받아온 후 홀수번째의 요소만 화면에 그려주도록 하여 해결하였다.
 ```javascript
-  const addAllProductToCart = () => {
-    wishLists.map((product, index) => {
-      if (index % 2 === 1) {
-        addToCart(product.id, popAlertModal);
-      }
-    });
-  };
+            {wishLists?.map((product, index) => {
+              if (index % 2 === 1) {
+                return (
+                      .
+                      .
+                      .
+                );
+              }
+            })}
   ```
 - 장바구니에 추가 기능
 - 모든 상품 장바구니에 추가 기능
